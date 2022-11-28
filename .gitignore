@@ -1,0 +1,10 @@
+*.pyc
+__pycache__/
+.idea/
+.vscode/
+*.swp
+*.sqlite3
+.env
+o2_db_data/
+*.log
+/static/

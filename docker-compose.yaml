@@ -1,0 +1,28 @@
+services:
+  celery_django:
+    build: .
+    container_name: celery_django
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    networks:
+      - celery_django
+    volumes:
+      - .:/app
+    depends_on:
+      - celery_django_redis
+
+  celery_django_redis:
+    container_name: celery_django_redis
+    image: redis:7.0
+    ports:
+      - "14000:6379"
+    networks:
+      - celery_django
+networks:
+  celery_django:
+
+
+
