@@ -19,6 +19,7 @@ services:
     image: redis:7.0
     ports:
       - "14000:6379"
+#      - "6379:6379"
     networks:
       - celery_django
 networks:
