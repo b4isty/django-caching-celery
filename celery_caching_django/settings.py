@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_celery_beat',
     "recipe",
+
 ]
 
 MIDDLEWARE = [
@@ -115,6 +117,11 @@ CACHE_TTL = 60 * 15
 CACHE_VERSION = 1
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
+
+# CELERY CONFIG
+
+CELERY_BROKER_URL = "amqp://guest:guest@rabbit:5672/"
+CELERY_RESULT_BACKEND = "redis://celery_django_redis:6379"
 
 
 LANGUAGE_CODE = 'en-us'

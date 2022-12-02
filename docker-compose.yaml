@@ -13,6 +13,7 @@ services:
       - .:/app
     depends_on:
       - celery_django_redis
+      - rabbit
 
   celery_django_redis:
     container_name: celery_django_redis
@@ -21,6 +22,30 @@ services:
       - "14000:6379"
 #      - "6379:6379"
     networks:
+      - celery_django
+  # RabbitMQ
+  rabbit:
+    container_name: rabbit
+    hostname: rabbit
+    image: rabbitmq:3.11
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - celery_django
+
+  celery:
+    container_name: celery
+    restart: always
+    build:
+      context: .
+    command: celery -A celery_caching_django worker -l info
+    volumes:
+      - .:/app
+    networks:
+      - celery_django
+    depends_on:
+      - rabbit
       - celery_django
 networks:
   celery_django:
